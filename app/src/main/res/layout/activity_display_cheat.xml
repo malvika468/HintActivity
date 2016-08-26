@@ -10,4 +10,16 @@
     android:id="@+id/activity_display_cheat"
     tools:context="com.example.user.hintcheatactivity.DisplayCheatActivity">
 
+    <Button
+        android:id="@+id/TrueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="show"
+        android:onClick="showAnswer"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

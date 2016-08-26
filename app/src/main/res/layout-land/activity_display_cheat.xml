@@ -12,4 +12,14 @@
 
     >
 
+    <Button
+        android:id="@+id/TrueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/trueText"
+        android:onClick="showAnswer"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/holo_orange_light"
+        />
+
 </LinearLayout>

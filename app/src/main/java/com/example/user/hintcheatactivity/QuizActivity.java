@@ -28,9 +28,11 @@ public class QuizActivity extends AppCompatActivity {
 
     int pressed = 0;
     int clicked=0;
+    int c;
     private static final String TAG = "QuizActivity";
     public final static String HINT_MESSAGE = "com.example.myfirstapp.MESSAGE";
     public final static String CHEAT_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    public static final int request=1;
     TextView textview;
 
 
@@ -74,6 +76,7 @@ public class QuizActivity extends AppCompatActivity {
         //action event for next button
         clicked=0;
         pressed=0;
+        c=0;
         TextView textview = (TextView) findViewById(R.id.textViewer);
         int t = 0;
         for (int i = 0; i < 1000; i++) {
@@ -97,44 +100,43 @@ public class QuizActivity extends AppCompatActivity {
     public void Cheat(View view) {
 
         clicked++;
+        //Intent intent1 = getIntent();
+        //int c = getIntent().getIntExtra(DisplayCheatActivity.cheaten_MESSAGE, 0);
 
         Intent intent = new Intent(this, DisplayCheatActivity.class);
-        // EditText editText = (EditText) findViewById(R.id.edit_message);
+            // EditText editText = (EditText) findViewById(R.id.edit_message);
 
-        TextView hintText = (TextView) findViewById(R.id.textViewer);
-        String text = hintText.getText().toString();
-        String[] s = text.split(" ");
-        String message = s[0];
-        int check=Integer.parseInt(message);
+            TextView hintText = (TextView) findViewById(R.id.textViewer);
+            String text = hintText.getText().toString();
+            String[] s = text.split(" ");
+            String message = s[0];
+            int check = Integer.parseInt(message);
 
-        int k, flagp = 0;
-        if (check == 1) {
-            flagp = 1;
-        }
-        for (k = 2; k <= check / 2; ++k) {
-            // condition for nonprime number
-            if (check % k == 0) {
+            int k, flagp = 0;
+            if (check == 1) {
                 flagp = 1;
-                break;
             }
+            for (k = 2; k <= check / 2; ++k) {
+                // condition for nonprime number
+                if (check % k == 0) {
+                    flagp = 1;
+                    break;
+                }
+            }
+
+            if (flagp == 0) {
+
+                String ans = message.concat(" it is prime");
+                intent.putExtra(CHEAT_MESSAGE, ans);
+                startActivityForResult(intent,request);
+            } else {
+                String ans = message.concat(" it is not prime");
+                intent.putExtra(CHEAT_MESSAGE, ans);
+                startActivityForResult(intent,request);
+            }
+
+
         }
-
-        if(flagp==0) {
-
-            String ans = message.concat(" it is prime");
-            intent.putExtra(CHEAT_MESSAGE, ans);
-            startActivity(intent);
-        }
-
-        else
-        {
-            String ans = message.concat(" it is not prime");
-            intent.putExtra(CHEAT_MESSAGE, ans);
-            startActivity(intent);
-        }
-
-
-    }
 
 
     public void Correct(View view) {                                               // action event for true button
@@ -149,6 +151,9 @@ public class QuizActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
 
+       // Intent intent2 = getIntent();
+       // int c = intent2.getIntExtra(DisplayCheatActivity.cheaten_MESSAGE, 0);
+
         int i, flag = 0;
         if (prime == 1) {
             flag = 1;
@@ -161,7 +166,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
 
-        if(flag==0 && pressed>=1 && clicked>=1)
+        if(flag==0 && pressed>=1 && c>=1)
         {
             Toast.makeText(context, "Correct but you have taken hint and cheated", Toast.LENGTH_SHORT).show();
         }
@@ -170,7 +175,7 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(context, "Correct but you have taken hint", Toast.LENGTH_SHORT).show();
         }
 
-        else if(flag==0 && clicked>=1)
+        else if(flag==0 && c>=1)
         {
             Toast.makeText(context, "Correct but you have cheated", Toast.LENGTH_SHORT).show();
         }
@@ -179,7 +184,7 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
         }
 
-        else if(flag==1 && clicked>=1 && pressed>=1)
+        else if(flag==1 && c>=1 && pressed>=1)
         {
             Toast.makeText(context, " Not Correct but you have taken hint and cheated", Toast.LENGTH_SHORT).show();
         }
@@ -189,7 +194,7 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(context, " Not Correct but you have taken hint", Toast.LENGTH_SHORT).show();
         }
 
-        else if(flag==1 && clicked>=1)
+        else if(flag==1 && c>=1)
         {
             Toast.makeText(context, " Not Correct but you have cheated", Toast.LENGTH_SHORT).show();
         }
@@ -214,6 +219,9 @@ public class QuizActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
 
+       // Intent intent2 = getIntent();
+       // int c = intent2.getIntExtra(DisplayCheatActivity.cheaten_MESSAGE, 0);
+
         int i, flag = 0;
         if (prime == 1) {
             flag = 1;
@@ -226,11 +234,11 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
 
-        if (flag != 0  && clicked>=1 && pressed>=1) {
+        if (flag != 0  && c>=1 && pressed>=1) {
 
             Toast.makeText(context, "Correct but you have cheated and taken hint", Toast.LENGTH_SHORT).show();
         }
-        else if(flag!=0 && clicked>=1)
+        else if(flag!=0 && c>=1)
         {
             Toast.makeText(context, "Correct but you have cheated", Toast.LENGTH_SHORT).show();
         }
@@ -243,7 +251,7 @@ public class QuizActivity extends AppCompatActivity {
         {
             Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
         }
-        else if(flag==0 && clicked>=1 && pressed>=1)
+        else if(flag==0 && c>=1 && pressed>=1)
         {
             Toast.makeText(context, "Not Correct but you have taken hint and cheated", Toast.LENGTH_SHORT).show();
         }
@@ -251,7 +259,7 @@ public class QuizActivity extends AppCompatActivity {
         else if(flag==0 && pressed>=1) {
             Toast.makeText(context, "Not Correct but you have taken hint", Toast.LENGTH_SHORT).show();
         }
-        else if(flag==0 && clicked>=1)
+        else if(flag==0 && c>=1)
         {
             Toast.makeText(context, "Not Correct but you have cheated", Toast.LENGTH_SHORT).show();
         }
@@ -272,6 +280,20 @@ public class QuizActivity extends AppCompatActivity {
 
         Log.i(TAG, "Inside onSaveInstance");
     }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == request) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                 c=data.getIntExtra(DisplayCheatActivity.cheaten_MESSAGE,0);
+            }
+        }
+    }
+
 
 
     private static int getRandomNumberInRange(int min, int max) {
